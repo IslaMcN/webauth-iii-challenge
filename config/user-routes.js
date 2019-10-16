@@ -4,9 +4,10 @@ const restricted = require('../auth/authenticate')
 const checkDept = require('../auth/check-dept-middleware');
 
 router.get('/', restricted, checkDept('HR'), (req, res) => {
+    console.log('hi')
     Users.find()
     .then(users => {
-        res.json({ loggedInUser: req.username, users});
+        res.status(200).json(users);
     })
     .catch(err => {
         res.send(err)

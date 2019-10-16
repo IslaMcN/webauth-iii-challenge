@@ -18,7 +18,10 @@ function authenticate(req, res, next){
                 );
                 
             }
-            req.decoded = decoded;
+            req.user = {
+                username: decodedToken.username,
+                department: decodedToken.department
+            };
                 next();
         })
     }else{
