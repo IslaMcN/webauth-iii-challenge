@@ -1,23 +1,16 @@
-server.post('/register', (req, res) => {
+const router = require('express').Router();
+const Users = require('../data/helpers/user-model');
+const restricted = require('../auth/authenticate')
+const checkDept = require('../auth/check-dept-middleware');
 
-})
+router.get('/', restricted, checkDept('HR'), (req, res) => {
+    Users.find()
+    .then(users => {
+        res.json({ loggedInUser: req.username, users});
+    })
+    .catch(err => {
+        res.send(err)
+    });
+});
 
-server.post('/login', (req, res) => {
-
-})
-
-server.get('/users', (req, res)=>{
-
-})
-
-server.get('/users/:id', (req, res) => {
-
-})
-
-server.delete('/users/:id', (req, res) => {
-
-})
-
-server.put('/users/:id', (req, res) => {
-    
-})
+module.exports = router;
